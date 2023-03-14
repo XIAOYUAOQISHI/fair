@@ -35,7 +35,7 @@
                                   "backgroundImage": {
                                     "className": "Sugar.netWorkImage",
                                     "pa": [
-                                      "http://c-ssl.duitang.com/uploads/item/202003/26/20200326223552_nayyt.jpeg"
+                                      "^(nameIcon)"
                                     ]
                                   }
                                 }
@@ -49,7 +49,7 @@
                               {
                                 "className": "Text",
                                 "pa": [
-                                  "贝贝"
+                                  "^(nickName)"
                                 ],
                                 "na": {
                                   "style": {
@@ -106,7 +106,7 @@
                             "child": {
                               "className": "Text",
                               "pa": [
-                                "换个头像换个心情😊"
+                                "^(contentText)"
                               ],
                               "na": {
                                 "style": {
@@ -136,7 +136,7 @@
                       "image": {
                         "className": "Sugar.netWorkImage",
                         "pa": [
-                          "https://img2.baidu.com/it/u=4114138728,2649938841&fm=253&fmt=auto&app=138&f=JPEG"
+                          "^(contentImg)"
                         ]
                       }
                     }
@@ -188,7 +188,7 @@
                                   {
                                     "className": "Text",
                                     "pa": [
-                                      "125"
+                                      "^(likeNum)"
                                     ],
                                     "na": {
                                       "style": {
@@ -230,7 +230,7 @@
                                   {
                                     "className": "Text",
                                     "pa": [
-                                      "66"
+                                      "^(commentNum)"
                                     ],
                                     "na": {
                                       "style": {

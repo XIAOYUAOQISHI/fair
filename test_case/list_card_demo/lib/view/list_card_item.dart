@@ -3,13 +3,37 @@ import 'package:flutter/material.dart';
 
 @FairPatch()
 class ListCardItem extends StatefulWidget {
-  const ListCardItem({Key key}) : super(key: key);
-
+  dynamic data;
+  ListCardItem({Key key,this.data}) : super(key: key);
   @override
   State<ListCardItem> createState() => _ListCardItemState();
 }
-
 class _ListCardItemState extends State<ListCardItem> {
+  @FairProps()
+  var fairProps;
+  String nickName;
+  String nameIcon;
+  String contentText;
+  String contentImg;
+  String likeNum;
+  String commentNum;
+  String commentText;
+
+
+  @override
+  void initState() {
+    super.initState();
+    fairProps = widget.data;
+    nickName=fairProps["nickName"];
+    nameIcon=fairProps["nameIcon"];
+    contentText=fairProps['contentText'];
+    contentImg=fairProps["contentImg"];
+    likeNum=fairProps["likeNum"];
+    commentNum=fairProps["commentNum"];
+    commentText=fairProps["commentText"];
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,14 +48,12 @@ class _ListCardItemState extends State<ListCardItem> {
                   children: [
                     CircleAvatar(
                       radius: 30,
-                      backgroundImage: Sugar.netWorkImage(
-                          "http://c-ssl.duitang.com/uploads/item/202003/26/20200326223552_nayyt.jpeg"),
+                      backgroundImage: Sugar.netWorkImage(nameIcon),
                     ),
                     SizedBox(
                       width: 20,
                     ),
-                    Text(
-                      "贝贝",
+                    Text(nickName,
                       style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -53,7 +75,7 @@ class _ListCardItemState extends State<ListCardItem> {
                 children: [
                   Expanded(
                       child: Text(
-                    "换个头像换个心情😊",
+                    contentText,
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -65,8 +87,7 @@ class _ListCardItemState extends State<ListCardItem> {
             ),
             Card(
               child: Image(
-                image: Sugar.netWorkImage(
-                    "https://img2.baidu.com/it/u=4114138728,2649938841&fm=253&fmt=auto&app=138&f=JPEG"),
+                image: Sugar.netWorkImage(contentImg),
               ),
             ),
             Padding(
@@ -85,7 +106,7 @@ class _ListCardItemState extends State<ListCardItem> {
                         width: 15,
                       ),
                       Text(
-                        "125",
+                        likeNum,
                         style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -104,7 +125,7 @@ class _ListCardItemState extends State<ListCardItem> {
                         width: 15,
                       ),
                       Text(
-                        "66",
+                        commentNum,
                         style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -126,4 +147,6 @@ class _ListCardItemState extends State<ListCardItem> {
       ),
     );
   }
+
+
 }

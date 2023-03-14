@@ -110,7 +110,13 @@
                     "name": "itme",
                     "path": "assets/bundle/lib_view_list_card_item.fair.json",
                     "data": {
-                      "": ""
+                      "nickName": "贝贝",
+                      "nameIcon": "http://c-ssl.duitang.com/uploads/item/202003/26/20200326223552_nayyt.jpeg",
+                      "contentText": "换个头像换个心情😊",
+                      "contentImg": "https://img2.baidu.com/it/u=4114138728,2649938841&fm=253&fmt=auto&app=138&f=JPEG",
+                      "likeNum": "145",
+                      "commentNum": "23",
+                      "commentText": "贝贝"
                     }
                   }
                 }
