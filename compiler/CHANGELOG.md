@@ -1,4 +1,14 @@
-## [1.4.1-dev.1]
+## [1.6.0]
+* Remove the generation time from the generation.fair. dart comment. 
+* Added the ignore unnecessary_import operation.
+
+## [1.5.1]
+* bugfix.
+
+## [1.5.0]
+* The function supports parameter passing.
+
+## [1.4.1]
 * bugfix.
 
 ## [1.4.0]

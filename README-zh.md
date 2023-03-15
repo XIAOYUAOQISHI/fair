@@ -1,7 +1,7 @@
 ![social preview](social-dark.png)
 
 <p align="center">
-  <a href="https://pub.dev/packages/fair"><img src="https://img.shields.io/badge/pub-2.8.1-orange" alt="pub"></a>
+  <a href="https://pub.dev/packages/fair"><img src="https://img.shields.io/badge/pub-3.1.0-orange" alt="pub"></a>
   <a href="https://github.com/wuba/fair"><img src="https://img.shields.io/badge/platform-flutter-blue.svg" alt="github"></a>
   <a href="https://fair.58.com/"><img src="https://img.shields.io/badge/doc-fair.58.com-green.svg" alt="doc"></a>
   <a href="https://github.com/wuba/fair/LICENSE"><img src="https://img.shields.io/badge/license-BSD-green.svg" alt="license"></a>
@@ -58,14 +58,15 @@ git clone https://github.com/wuba/fair.git
 ```yaml
 # add Fair dependency
 dependencies:
-  fair: 2.8.1
+  fair: 3.1.0
 
 # add build_runner and compiler dependency
 dev_dependencies:
   build_runner: ^2.0.0
-  fair_compiler: ^1.4.0
+  fair_compiler: ^1.6.0
 
 # switch "fair_version" according to the local Flutter SDK version
+# Flutter SDK 3.3.x(3.3.0、3.3.1、3.3.2、3.3.3、3.3.4、3.3.5、3.3.6) -> flutter_3_3_0
 # Flutter SDK 3.0.x(3.0.0、3.0.1、3.0.2、3.0.3、3.0.4、3.0.5) -> flutter_3_0_0
 # Flutter SDK 2.10.x(2.10.0、2.10.1、2.10.2、2.10.3) -> flutter_2_10_0
 # Flutter SDK 2.8.x(2.8.0、2.8.1) -> flutter_2_8_0
@@ -74,7 +75,7 @@ dev_dependencies:
 # Flutter SDK 1.22.6 -> flutter_1_22_6
 dependency_overrides:
   fair_version:
-    path: ../fair/flutter_version/flutter_3_0_0
+    path: ../fair/flutter_version/flutter_3_3_0
 ```
 
 **step3：将App替换为FairApp**
@@ -149,18 +150,58 @@ faircli create -k carrier -n carrier_project_name
 
 <html>
 <div align="center">
-<img src="fair_tools.gif" width="50%">
+<img src="fair_tools.gif" width="30%">
 </div>
 </html>
 
 更多介绍请查看 [文档](fair_tools.md)  
-  
-*工具集：*  
-Fair脚手架: [Fair CLI](https://pub.dev/packages/faircli)  
-IDEA插件: [jetbrains plugin fairtemplate](https://plugins.jetbrains.com/plugin/20323-fairtemplate)
 
+## ⚙️fair-online云开发平台
+Fair-Online 是面向Flutter 开发者，提供从Flutter 在线开发，到实时编译预览，打包发布、动态下发端侧更新，实现Flutter 线上动态化的一体化云开发平台。
+
+开发者无需配置Flutter 开发环境，在线开发调试代码，即时编译预览，所见即所得，结合58开源团队打造的Flutter 动态化框架 Fair 及热更新平台 FairPushy ，实现Flutter 线上动态化。
+
+<html>
+<div align="center">
+<img src="./fair_online/fair_online.gif" width="90%">
+</div>
+</html>
+
+
+在线体验地址：
+[Fair-Online Platform](https://fair-online.58.com/)
+
+更多介绍请查看 [文档](./fair_online/README.md)
 
 ## 🔨最近版本
+
+### 3.1.0
+更新时间：2023.03.14
+
+- 升级 analyzer 库到 5.5.0 版本；
+- Dart 函数转 JS 支持参数传递；
+- JS Object 取值兼容；
+- 删除 fair/android 中 kotlin 依赖；
+- 添加 IconData 的自定义解析；
+- 可选位置参数的生成修改为 pa 获取；
+- 修复 OptionalPositional 参数默认值丢失问题；
+- 去除 generated.fair.dart 注释中的生成时间；
+- 增加 ignore unnecessary_import 操作；
+- 修复 Sugar.switchCase key 和 defaultValue 赋值错误问题；
+- binding 修改为 SplayTreeMap，增加搜索效率，特别是对于列表，短时间会搜索重复 tag；
+- 暴露出 specialBinding 以便用户能重载某个值；
+- provider 添加到 _binding 中的时候以用户设置的为准，方便用户快速修正；
+- 修复 loadCoreJs package 拼接问题；
+- 降低 minSdkVersion 版本到 16；
+- runApplication 支持指定 JS 所在的 package；
+- 修复 _reload 方法中调用 context 报错问题。
+
+### 3.0.0
+更新时间：2022.11.17
+
+- 修复class 构造函数解析异常；
+- Fair 兼容 Web 端；
+- bindmap 逻辑优化。
 
 ### 2.8.1
 更新时间：2022.11.01
@@ -307,6 +348,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/itzhaoqian"><img src="https://avatars.githubusercontent.com/u/23277488?v=4?s=100" width="100px;" alt=""/><br /><sub><b>itzhaoqian</b></sub></a><br /><a href="https://github.com/wuba/fair/commits?author=itzhaoqian" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/xxliang"><img src="https://avatars.githubusercontent.com/u/5005255?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sunlight Xie</b></sub></a><br /><a href="https://github.com/wuba/fair/commits?author=xxliang" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/a303268287"><img src="https://avatars.githubusercontent.com/u/19368353?v=4?s=100" width="100px;" alt=""/><br /><sub><b>lhdycxgghb</b></sub></a><br /><a href="https://github.com/wuba/fair/commits?author=a303268287" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/hlwhl"><img src="https://avatars.githubusercontent.com/u/7610615?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Prome</b></sub></a><br /><a href="https://github.com/wuba/fair/commits?author=hlwhl" title="Code">💻</a></td>
+     <td align="center"><a href="https://github.com/hlwhl"><img src="https://avatars.githubusercontent.com/u/16477333?v=4" width="100px;" alt=""/><br /><sub><b>zmtzawqlp</b></sub></a><br /><a href="https://github.com/wuba/fair/commits?author=zmtzawqlp" title="Code">💻</a></td>
   </tr>
 </table>
 
@@ -343,8 +386,8 @@ Star&Fork 是对我们最大的支持~
 
 对Fair感兴趣的小伙伴，可以加入交流群。技术咨询、讨论，请移步至[![Gitter](https://badges.gitter.im/flutter_fair/community.svg)](https://gitter.im/flutter_fair/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-| 微信                         | 美事（内部）                 |
-| ---------------------------- | ---------------------------- |
+| 微信                       | 美事（内部）                   |
+|--------------------------|--------------------------|
 | ![wechat](./weixin.jpeg) | ![meishi](./meishi.jpeg) |
 
 > 微信入群：请先添加58技术小秘书为好友，备注fair，小秘书邀请进群。

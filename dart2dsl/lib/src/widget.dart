@@ -329,7 +329,7 @@ Future<ComponentParts?> processFile(AnalysisContext context, String path, {bool 
   if (analysisExports) {
     //Most of SDK entrance files export other files.
     //We need analysis all of them when we are compiling.
-    var exports = result.element.enclosingElement.exports;
+    var exports = result.element.enclosingElement.libraryExports;
     var exportsUnits = exports.map((e) => e.exportedLibrary?.definingCompilationUnit).toList();
     elementsList.addAll(exportsUnits);
   }
@@ -483,7 +483,11 @@ Map<String, dynamic> _writeMethod(StringBuffer buffer, String? name, Method elem
       }
       var namedDeclare = '${p.name}: $prop';
       var positionDeclare = isDouble ? 'props[\'pa\'][$i]?.toDouble(),' : 'props[\'pa\'][$i],';
-      buffer.write(p.isNamed == true ? namedDeclare : positionDeclare);
+      buffer.write(p.isNamed == true
+          ? namedDeclare
+          : p.isOptionalPositional == true
+              ? prop.replaceAll('props[\'${p.name}\']', 'props[\'pa\'][$i]')
+              : positionDeclare);
     }
     var params = element.parameters?.fold('', (String? value, p) => ((value ?? '') + (p.isNamed == true ? '${p.type} ${p.name}, ' : '${p.name}, ')));
     print('➡️ $name({$params})');
@@ -526,7 +530,7 @@ Map<String, dynamic> _writeFunctionParameter(StringBuffer buffer, String name, F
 
 var transformer = TransformProxy();
 
-bool _matchType(InterfaceType? type, List<String>? widgets, {ClassElement? classElement}) {
+bool _matchType(InterfaceType? type, List<String>? widgets, {InterfaceElement? classElement}) {
   if (type == null) return false;
   var hit = (widgets ?? []).indexWhere((element) => element == type.name) != -1;
   return hit || _tryInternalCheck(type, widgets, classElement) || _matchType(type.superclass, widgets);
@@ -626,7 +630,7 @@ class Parameter {
   final String? type;
   final bool? isNamed;
   final bool? isOptional;
-
+  final bool? isOptionalPositional;
   //暂时为了转化List
   final String? displayName;
   final String? defaultValueCode;
@@ -637,6 +641,7 @@ class Parameter {
     this.displayName,
     this.isNamed = false,
     this.isOptional = true,
+    this.isOptionalPositional = false,
     this.defaultValueCode,
   });
 }
@@ -659,9 +664,9 @@ List<ClassExposed> _visit(CompilationUnitElement? unitElement, [bool isSdk = fal
   if (unitElement == null) return <ClassExposed>[];
   var exposed = <ClassExposed>[];
   // 枚举与class不同
-  var apis = [...unitElement.types, ...unitElement.enums];
+  var apis = [...unitElement.classes, ...unitElement.enums];
   for (var classElement in apis) {
-    if (classElement.isAbstract || _invalidElement(classElement) || classElement.isSynthetic) {
+    if ((classElement is ClassElement && classElement.isAbstract) || _invalidElement(classElement) || classElement.isSynthetic) {
       print('skip ' + classElement.name);
       continue;
     }
@@ -688,10 +693,12 @@ List<ClassExposed> _visit(CompilationUnitElement? unitElement, [bool isSdk = fal
               parameters.add(Parameter(
                 type: e.type.name,
                 name: e.name,
-                displayName: e.type.displayName,
+                ///此处withNullability待测试
+                displayName: e.type.getDisplayString(withNullability: false),
                 isNamed: e.isNamed,
                 isOptional: e.isOptional,
                 defaultValueCode: e.defaultValueCode,
+                isOptionalPositional: e.isOptionalPositional,
               ));
 
               if (e.type.name == null && e.type is FunctionType) {
@@ -748,7 +755,7 @@ List<ClassExposed> _visit(CompilationUnitElement? unitElement, [bool isSdk = fal
       if (methodElement.parameters.isNotEmpty) {
         parameters = methodElement.parameters
             .map(
-                (e) => Parameter(type: e.type.name, name: e.name, isNamed: e.isNamed, isOptional: e.isOptional, defaultValueCode: e.defaultValueCode))
+                (e) => Parameter(type: e.type.name, name: e.name, isNamed: e.isNamed, isOptional: e.isOptional, defaultValueCode: e.defaultValueCode, isOptionalPositional: e.isOptionalPositional,))
             .toList(growable: false);
       }
       staticMethods.add(Method(name, parameters: parameters, isWidget: isWidget));
